@@ -1,13 +1,7 @@
 # Azure_REST_API
-The goal of this repository is to explain how to make HTTP requests to Azure REST API when we cannot make use of the Azure .NET SDK or Python SDK. 
-Two examples are provided, one with curl and one with Python.
+The goal of this repository is to explain how to make HTTP requests to Azure REST API when we cannot make use of the Azure .NET SDK or Python SKD or others. 
 
-Azure Batch Management  
-https://docs.microsoft.com/en-us/rest/api/batchmanagement/
-
-Azure Batch Service
-https://docs.microsoft.com/en-us/rest/api/batchservice/
-
+Below we provide two different examples, with curl and python, to get information about the Batch Accounts we have in a subscription. For the HTTP request we will make use to the Azure Batch Management. 
 
 * [Azure Batch Management](https://docs.microsoft.com/en-us/rest/api/batchmanagement/) --> Provides operations for working with the Batch Service
 * [Azure Batch Service ](https://docs.microsoft.com/en-us/rest/api/batchservice/) --> To Schedule and run computational workloads
