@@ -134,14 +134,66 @@ def batch_acc_list(_auth_header_token):
    jsonData = response.json()
    print(json.dumps(jsonData, indent=4))
 
+# Create Batch Account
+def batch_acc_create(_auth_header_token, _accountName, _resourceGroupName):
+
+   body = { "location": "westeurope",
+                   "properties": {
+                     "autoStorage": {
+                               "storageAccountId": "/subscriptions/XXXXXXXXXX/resourceGroups/rg-batchdemo/providers/Microsoft.Storage/storageAccounts/samplestorage"
+                     }
+                   },
+                   "identity": {
+                       "type": "SystemAssigned"
+                   }
+                 }
+
+   json_object = json.dumps(body)
+
+   uri = 'https://management.azure.com/subscriptions/' + subscriptionId + '/resourceGroups/' + _resourceGroupName + '/providers/Microsoft.Batch/batchAccounts/' + _accountName + '?api-version=2021-06-01'
+
+
+   response = requests.put(uri, data=json_object, headers=_auth_header_token)
+   jsonData = response.json()
+
+   print(json.dumps(jsonData, indent=4))
+
+
+# Delete Batch Account
+def batch_acc_delete(_auth_header_token, _accountName, _resourceGroupName):
+
+   uri = 'https://management.azure.com/subscriptions/' + subscriptionId + '/resourceGroups/' + _resourceGroupName + '/providers/Microsoft.Batch/batchAccounts/' + _accountName + '?api-version=2021-06-01'
+
+   response = requests.delete(uri, headers=_auth_header_token)
+   print(response)
+
+
+
 
 def main():
 
+   # BATCH ACCOUNT PARAMETERS
+   accountName = 'ancabatchdemo'
+   resourceGroupName = 'rg-batchdemo'
+   poolName = 'demoPool'
+
    auth_header_token=get_auth_header()
 
-   account_list = batch_acc_list(auth_header_token)
-   print(account_list)
-   
+   # LIST BATCH ACCOUNTS
+   #account_list = batch_acc_list(auth_header_token)
+   #print(account_list)
+
+   # CREATE BATCH ACCOUNT
+   new_account =  batch_acc_create(auth_header_token,accountName,resourceGroupName)
+
+
+   # CREATE A NEW POOL
+   # PUT https://management.azure.com/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}/pools/{poolName}?api-version=2021-06-01
+   # new_pool = batch_create_pool(auth_header_token,accountName,resourceGroupName,poolName)
+
+   # DELETE BATCH ACCOUNT
+   delete_account =  batch_acc_delete(auth_header_token,accountName,resourceGroupName)
+
 if __name__ == '__main__':
 
    main()
